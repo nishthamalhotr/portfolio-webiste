@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================= BASE THEME ================= */
 @layer base {
   :root {
     --background: 220 20% 97%;
@@ -11,9 +12,6 @@
 
     --card: 0 0% 100%;
     --card-foreground: 220 25% 10%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
 
     --primary: 250 75% 58%;
     --primary-foreground: 0 0% 100%;
@@ -27,57 +25,103 @@
     --accent: 170 65% 45%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
     --border: 220 15% 88%;
     --input: 220 15% 88%;
     --ring: 250 75% 58%;
 
     --radius: 0.75rem;
 
+    /* 🔥 Premium Gradients */
     --hero-gradient: linear-gradient(135deg, hsl(250 75% 58%), hsl(280 70% 55%), hsl(310 65% 55%));
+    --glass-bg: rgba(255, 255, 255, 0.6);
+
     --section-alt: 220 20% 94%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground;
     font-family: 'Winky Sans', sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Text Selection */
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
   }
 }
 
+/* ================= COMPONENTS ================= */
+@layer components {
+
+  /* Glass Card */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.5);
+    border-radius: var(--radius);
+  }
+
+  /* Premium Button */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold transition-all duration-300;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Card Hover Effect */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* ================= UTILITIES ================= */
 @layer utilities {
+
+  /* Gradient Text */
   .text-gradient {
     background: var(--hero-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
+  /* Section Background */
   .bg-section-alt {
     background-color: hsl(var(--section-alt));
   }
+
+  /* Glow Effect */
+  .glow {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.3);
+  }
+
+  /* Subtle Border Glow */
+  .border-glow:hover {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
+  }
 }
 
+/* ================= ANIMATIONS ================= */
+
+/* Fade Up */
 @keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
@@ -86,10 +130,51 @@
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
+  animation: fade-in-up 0.7s ease-out forwards;
 }
 
 .animate-fade-in-up-delay {
-  animation: fade-in-up 0.6s ease-out 0.2s forwards;
+  animation: fade-in-up 0.7s ease-out 0.2s forwards;
   opacity: 0;
+}
+
+/* Scale In */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out forwards;
+}
+
+/* Gradient Animation */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 6s infinite alternate;
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }
